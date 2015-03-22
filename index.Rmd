@@ -1,0 +1,581 @@
+---
+title       : DublinR - Machine Learning
+subtitle    : Machine Learning on Machines
+author      : Eoin Brazil - https://github.com/braz/DublinR-ML-machine
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+output:
+  ioslides_presentation:
+    widescreen: true
+    smaller: true
+--- 
+
+``` {r setup, include=FALSE}
+options(width=40)
+```
+
+## Machine Learning Techniques in R  
+
+### How can you interpret their results?  
+
+### A few techniques to improve prediction / reduce over-fitting  
+
+### Nuts & Bolts - 2 data sets
+
+--- &twocol
+
+## Large scale computations in clusters
+
+*** {name: left}
+
+```{r HPC-Cluster-Overview, fig.width=7, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/HPC-Cluster-Overview.png")
+ grid.raster(img)
+```
+
+*** {name: right}
+
+- Large scale clusters have never been more available (e.g Azure, EC2, Bluemix, Compute Engine)
+  - Even RStudio has an AMI (http://www.louisaslett.com/RStudio_AMI/). I used RStudio and an EC c4.4xlarge instance with it for many of these examples.
+- Monitoring, collecting and interpreting the operational data from these hosts is useful to determine various aspects
+ - Type of calculation / job
+ - Utilisation of CPU
+
+
+--- &twocol
+
+## Type of calculation / job and Utilisation of CPU
+
+*** {name: left}
+
+```{r schedulingdata_description, fig.width=7, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/schedulingdata_description.png")
+ grid.raster(img)
+```
+
+*** {name: right}
+
+```{r kaggle-burncpu-model-t4, fig.width=7, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/kaggle-burncpu-model-t4.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Model Building Process
+```{r fig.width=14, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/ModelBuilding101.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Data Transformations
+
+```{r fig.width=14, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/DataTransformations.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Addressing Feature Selection
+```{r fig.width=14, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/CARET-Train-FeatureSelection.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Model Selection and Model Assessment
+```{r fig.width=14, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/ModelAssessmentModelSelection.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Interpreting A Confusion Matrix
+
+```{r confusionmatrixintp, fig.width=14, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/ConfusionMatrix101ExplanationSimple.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Interpreting A Confusion Matrix Example
+
+```{r confusionmatrixexample, fig.width=14, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/ConfusionMatrix101ExplanationSimpleExample.png")
+ grid.raster(img)
+```
+
+
+--- .class #id bg:white
+
+## Confusion Matrix - Calculations
+
+```{r confusionmatrix102, fig.width=14, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/ConfusionMatrix102.png")
+ grid.raster(img)
+```
+
+--- &twocol
+
+## Interpreting A ROC Plot
+
+*** {name: left}
+
+```{r ROC101Explanation, fig.width=5, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/ROC101Explanation.png")
+ grid.raster(img)
+```
+
+*** {name: right}
+
+  - A point in this plot is better than another if it is to the northwest (TPR higher / FPR lower / or both)
+  - ``Conservatives'' - on LHS and near the X-axis - only make positive classification with strong evidence and making few FP errors but low TP rates
+  - ``Liberals'' - on upper RHS - make positive classifications with weak evidence so nearly all positives identified however high FP rates
+
+--- &twocol
+
+## Addressing Prediction Error
+
+*** {name: left}
+
+```{r 10CrossFoldValidation101Explanation, fig.width=7, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/10CrossFoldValidation101Explanation.png")
+ grid.raster(img)
+```
+
+*** {name: right}
+
+- K-fold Cross-Validation (e.g. 10-fold) 
+  - Allows for averaging the error across the models
+- Bootstrapping, draw B random samples with replacement from data set to create B bootstrapped data sets with same size as original. These are used as training sets with the original used as the test set.
+- Other variations on above:
+  - Repeated cross validation
+  - The '.632' bootstrap
+
+--- .class #id bg:white
+
+## Boosting / Bootstrap aggregation
+
+```{r Boosting101Explanation, fig.width=14, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/Boosting101Explanation.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Bagging
+
+```{r Bagging101Explanation, fig.width=14, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/Bagging101Explanation.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Dataset 1 - Job Scheduling Data
+
+```{r job-scheduling-data, fig.width=7, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+data(schedulingData)
+summary(schedulingData)
+```
+
+--- .class #id bg:white
+
+## Dataset 1 - Job Scheduling Data
+
+```{r TablePlotSchedulingData, fig.width=14, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/schedulingData_tableplot.png")
+ grid.raster(img)
+```
+
+
+--- .class #id bg:white
+
+## Dataset 1 - Job Scheduling Data - Partitioning and Cost Matrix
+
+```{r job-scheduling-data-cost-matrix, fig.width=7, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(caret)
+library(lattice)
+library(ggplot2)
+trainingSet <- createDataPartition(schedulingData$Class, p = .8, list = FALSE)
+# As the distribution is skewed and contains lots of zeros, one is added to allow log transforming the data
+schedulingData$NumPending <- schedulingData$NumPending + 1
+
+# Splitting the data into training and testing data
+trainData <- schedulingData[ trainingSet,]
+testData  <- schedulingData[-trainingSet,]
+
+modForm <- as.formula(Class ~ Protocol + log10(Compounds) + log10(InputFields)+ log10(Iterations) + log10(NumPending) + Hour + Day)
+
+### Create the cost matrix
+costMatrix <- ifelse(diag(4) == 1, 0, 1)
+costMatrix[1,4] <- 10
+costMatrix[1,3] <- 5
+costMatrix[2,4] <- 5
+costMatrix[2,3] <- 5
+rownames(costMatrix) <- levels(trainData$Class)
+colnames(costMatrix) <- levels(trainData$Class)
+str(trainData)
+costMatrix
+```
+
+--- .class #id bg:white
+
+## Dataset 1 - Job Scheduling Data - C50 Single Tree
+
+```{r job-scheduling-data-onetree, fig.width=7, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(caret)
+library(lattice)
+library(ggplot2)
+library(C50)
+trainingSet <- createDataPartition(schedulingData$Class, p = .8, list = FALSE)
+# As the distribution is skewed and contains lots of zeros, one is added to allow log transforming the data
+schedulingData$NumPending <- schedulingData$NumPending + 1
+
+# Splitting the data into training and testing data
+trainData <- schedulingData[ trainingSet,]
+testData  <- schedulingData[-trainingSet,]
+
+oneTree <- C5.0(Class ~ ., data = trainData)
+oneTree
+oneTreePred <- predict(oneTree, testData)
+oneTreeProbs <- predict(oneTree, testData, type ="prob")
+postResample(oneTreePred, testData$Class)
+```
+
+--- .class #id bg:white
+
+## Dataset 1 - Job Scheduling Data - C50 Cross-Validated (10 fold, repeated 5 times) - Part 1
+```{r job-scheduling-data-c50fit1, fig.width=7, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(caret)
+library(lattice)
+library(ggplot2)
+library(C50)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/c50Fit.rdata")
+c50Fit
+```
+
+--- .class #id bg:white
+
+```{r job-scheduling-data-c50fit2, fig.width=7, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(caret)
+library(lattice)
+library(ggplot2)
+library(C50)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/c50Fit.rdata")
+c50Fit$results
+```
+
+--- .class #id bg:white
+
+```{r job-scheduling-data-c50fit-confusionmatrix, fig.width=7, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(caret)
+library(lattice)
+library(ggplot2)
+library(C50)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/c50Fit.rdata")
+confusionMatrix(c50Fit,norm="none")
+
+trainingSet <- createDataPartition(schedulingData$Class, p = .8, list = FALSE)
+# As the distribution is skewed and contains lots of zeros, one is added to allow log transforming the data
+schedulingData$NumPending <- schedulingData$NumPending + 1
+
+# Splitting the data into training and testing data
+trainData <- schedulingData[ trainingSet,]
+testData  <- schedulingData[-trainingSet,]
+### Create the cost matrix
+costMatrix <- ifelse(diag(4) == 1, 0, 1)
+costMatrix[1,4] <- 10
+costMatrix[1,3] <- 5
+costMatrix[2,4] <- 5
+costMatrix[2,3] <- 5
+rownames(costMatrix) <- levels(trainData$Class)
+colnames(costMatrix) <- levels(trainData$Class)
+costMatrix
+```
+
+--- .class #id bg:white
+
+## Results of a variety of approaches focus on Cost metric
+```{r job-scheduling-data-results, fig.width=14, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(caret)
+library(lattice)
+library(ggplot2)
+library(C50)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/rpFitCost.rdata")
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/rpFit.rdata")
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/rpCostBag.rdata")
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/knnFit1.rdata")
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/fdaFit.rdata")
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/c50Fit.rdata")
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/bagFit.rdata")
+modelList <- list("CART (Costs)" = rpFitCost, CART = rpFit, C5.0 = c50Fit, FDA = fdaFit, Bagging = bagFit, "Bagging (Costs)" = rpCostBag)
+rs <- resamples(modelList)
+plot(bwplot(rs, metric = "Cost"))
+```
+
+--- &twocol
+
+## Dataset 2 - CPU Burn Kaggle
+
+*** {name: left}
+
+```{r cpuburn-data-recap, fig.width=7, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/kaggle-burncpu-model-t4.png")
+ grid.raster(img)
+```
+
+*** {name: right}
+
+```{r cpuburn-data-corrgram, fig.width=8, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/cpuburn_corrgram.png")
+ grid.raster(img)
+``` 
+
+--- .class #id bg:white
+
+## Dataset 2 - CPU Burn Kaggle
+
+```{r cpuburn-data-machinestotime, fig.width=14, fig.height=9, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/CPULoadForMachines.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Dataset 2 - CPU Burn Kaggle
+
+```{r cpuburn-headofdata, fig.width=7, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/cpuburn.data.df.rdata")
+head(cpuburn.data.df,n=1)
+```
+
+--- .class #id bg:white
+
+## Dataset 2 - CPU Burn Kaggle
+
+```{r cpuburn-tableplot, fig.width=14, fig.height=8, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/cpuburn_tableplot_data.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Dataset 2 - CPU Burn Kaggle - Feature Selection 2
+
+```{r cpuburn-correlatedvariables, fig.width=13, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(corrplot)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/cpuburn.data.df.rdata")
+
+cpuburn.variables.nearZeroVar <- nearZeroVar(cpuburn.data.df)
+cpuburn.variables.nearZeroVar.names <- colnames(cpuburn.data.df[, cpuburn.variables.nearZeroVar])
+print("nearZeroVar:")
+cpuburn.variables.nearZeroVar.names
+cpuburn.corr <- cor(cpuburn.data.df)
+cpuburn.variables.corr <- findCorrelation(cpuburn.corr, cutoff=0.75)
+cpuburn.variables.corr.names <- colnames(cpuburn.data.df[,cpuburn.variables.corr])
+print("high correlation .75+:")
+cpuburn.variables.corr.names
+```
+
+--- .class #id bg:white
+
+## Dataset 2 - CPU Burn Kaggle - Feature Selection 2
+
+```{r cpuburn-correlatedvariables2, fig.width=13, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(corrplot)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/cpuburn.data.df.rdata")
+
+cpuburn.variables.nearZeroVar <- nearZeroVar(cpuburn.data.df)
+cpuburn.variables.nearZeroVar.names <- colnames(cpuburn.data.df[, cpuburn.variables.nearZeroVar])
+cpuburn.corr <- cor(cpuburn.data.df)
+cpuburn.variables.corr <- findCorrelation(cpuburn.corr, cutoff=0.75)
+cpuburn.variables.corr.names <- colnames(cpuburn.data.df[,cpuburn.variables.corr])
+cpuburn.data.df.corr <- cpuburn.data.df[,cpuburn.variables.corr]
+cpuburn.variables.to.filter <- unique(c(cpuburn.variables.nearZeroVar,cpuburn.variables.corr))
+cpuburn.variables.to.filter.names <- colnames(cpuburn.data.df[,cpuburn.variables.to.filter])
+print("After removing nearZeroVar and high correlation .75+:")
+cpuburn.data.df.reduced <- cpuburn.data.df[,-cpuburn.variables.to.filter]
+colnames(cpuburn.data.df.reduced)
+```
+
+--- .class #id bg:white
+
+## Dataset 2 - CPU Burn Kaggle - Feature Selection 3
+
+```{r cpuburn-correlatedvariables3, fig.width=13, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(corrplot)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/cpuburn.data.df.rdata")
+
+cpuburn.variables.nearZeroVar <- nearZeroVar(cpuburn.data.df)
+cpuburn.variables.nearZeroVar.names <- colnames(cpuburn.data.df[, cpuburn.variables.nearZeroVar])
+cpuburn.corr <- cor(cpuburn.data.df)
+cpuburn.variables.corr <- findCorrelation(cpuburn.corr, cutoff=0.75)
+cpuburn.variables.corr.names <- colnames(cpuburn.data.df[,cpuburn.variables.corr])
+cpuburn.data.df.corr <- cpuburn.data.df[,cpuburn.variables.corr]
+cpuburn.variables.to.filter <- unique(c(cpuburn.variables.nearZeroVar,cpuburn.variables.corr))
+cpuburn.variables.to.filter.names <- colnames(cpuburn.data.df[,cpuburn.variables.to.filter])
+cpuburn.data.df.reduced <- cpuburn.data.df[,-cpuburn.variables.to.filter]
+print("Applying BoxCox, Centering, Scaling and PCA to data:")
+trans <- preProcess(cpuburn.data.df.reduced, method=c("BoxCox", "center", "scale", "pca"))
+trans
+```
+
+--- .class #id bg:white
+
+## Dataset 2 - CPU Burn - C50 Single Tree
+```{r cpuburn-data-c50singletree, fig.width=7, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(caret)
+library(lattice)
+library(ggplot2)
+library(C50)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/SingleTree.rdata")
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/cpuburn.data.df.reduced.test.rdata")
+head(cpuburn.data.df.reduced.test,n=2)
+SingleTreePred <- predict(SingleTree, cpuburn.data.df.reduced.test)
+SingleTreeProbs <- predict(SingleTree, cpuburn.data.df.reduced.test, type ="prob")
+postResample(SingleTreePred, cpuburn.data.df.reduced.test$is_cpu_busy)
+```
+
+--- .class #id bg:white
+
+## Results of Logistic Regression and PLS approaches 
+```{r cpuburn-data-results, fig.width=14, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(caret)
+library(lattice)
+library(ggplot2)
+library(C50)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/cpuburn.pls.rdata")
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/cpuburn.logisticReg.rdata")
+modelList <- list(PLS = cpuburn.pls, "Logistic Regression" = cpuburn.logisticReg)
+rs <- resamples(modelList)
+plot(bwplot(rs, metric = "RMSE"))
+```
+
+--- .class #id bg:white
+
+## Results of Random Forest approach 
+```{r cpuburn-data-results2, fig.width=14, fig.height=7, echo=FALSE}
+library(AppliedPredictiveModeling)
+library(caret)
+library(lattice)
+library(ggplot2)
+library(C50)
+load("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/data/cpuburn.rpartTune.rdata")
+plot(cpuburn.rpartTune, scales = list(x = list(log = 10)))
+```
+
+--- .class #id bg:white
+
+## In Summary
+
+### An idea of some of the types of classifiers available in ML.
+
+### What a confusion matrix and ROC means for a classifier and how to interpret them
+
+### An idea of how to test a set of techniques and parameters to help you find the best model for your data
+
+### Slides, Data, Scripts will be put up on GH:
+#### https://github.com/braz/DublinR-ML-machines
+
+--- .class #id bg:white
+
+## Aside - How do decision trees work ?
+```{r fig.width=15, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/DecisionTree101Explanation.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Aside - How does a random forest work ?
+```{r fig.width=15, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/RandomForest101Explanation.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Aside - How does k nearest neighbors work ?
+```{r fig.width=15, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/kNN101Explanation.png")
+ grid.raster(img)
+```
+
+--- .class #id bg:white
+
+## Aside - How do support vector machines work ?
+```{r SVN101Explanation, fig.width=15, fig.height=7, echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("/Users/eoinbrazil/Desktop/DublinR/TreesAndForests/DublinR-ML-machines/figure/SVN101Explanation.png")
+ grid.raster(img)
+```
+
